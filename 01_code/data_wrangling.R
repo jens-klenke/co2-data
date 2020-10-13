@@ -25,12 +25,17 @@ co2_data_45_g28 <- co2_data%>%
   dplyr::mutate(co2_per_capita = co2 / (population/1000000))%>%
   dplyr::group_by(year)%>%
   dplyr::mutate(mean_co2_per_capita = mean(co2_per_capita))%>%
-  dplyr::mutate(demeand_co2_per_capita = co2_per_capita - mean_co2_per_capita)
+  dplyr::mutate(demeand_co2_per_capita = co2_per_capita - mean_co2_per_capita)%>%
+  dplyr::mutate(log_co2_per_capita = log(co2_per_capita))%>%
+  dplyr::mutate(log_mean_co2_per_capita = mean(log_co2_per_capita))%>%
+  dplyr::mutate(log_demeand_co2_per_capita = log_co2_per_capita - log_mean_co2_per_capita)
 
 
 ggplot(co2_data_45_g28, aes(x = year, y = demeand_co2_per_capita, colour = country))+
   geom_line()
 
+ggplot(co2_data_45_g28, aes(x = year, y = log_demeand_co2_per_capita, colour = country))+
+  geom_line()
 
 
 
